@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f4f0e7" />
+    <meta name="description" content="Nine data analytics practice studies, from data validation to forecasting and segmentation. Browse methods, dataset sizes and the original notebooks." />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Data Fieldnotes" />
+    <meta property="og:title" content="Data Fieldnotes — Analytics casebook" />
+    <meta property="og:description" content="A notebook-backed casebook of nine data analytics practice studies." />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Data Fieldnotes — Analytics casebook" />
+    <meta name="twitter:description" content="Explore nine notebook-backed analytics studies and their source data sizes." />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; connect-src 'self'; img-src 'self' data:; base-uri 'none'; object-src 'none'; form-action 'none'" />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="app.js" defer></script>
+    <title>Data Fieldnotes — Analytics casebook</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#casebook">Skip to casebook</a>
+    <noscript><p class="noscript">Turn on JavaScript to search and filter these case studies. The original notebooks are in this repository.</p></noscript>
+    <header class="masthead">
+      <a class="wordmark" href="./" aria-label="Data Fieldnotes home">
+        <span class="wordmark-icon" aria-hidden="true">D<span>:</span></span>
+        <span>DATA<br />FIELDNOTES</span>
+      </a>
+      <p class="masthead-note">COGNETIX TECHNOLOGY · ANALYTICS INTERNSHIP</p>
+      <button class="print-button" id="print-casebook" type="button">Print casebook</button>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-main">
+          <p class="issue-line"><span>FIELD NOTES</span><span>VOL. 01</span><span>DATA PRACTICE</span></p>
+          <h1 id="hero-title">Good analysis<br />starts with <em>good questions.</em></h1>
+          <p class="hero-deck">A casebook of nine internship studies: what each notebook asks, which tools it uses, and how much source data it starts from.</p>
+          <p class="honesty-line">Practice work · Notebook summaries are not independently rerun · No business claims</p>
+        </div>
+        <aside class="track-card" aria-label="Project progression">
+          <p class="track-label">THE LEARNING TRACKS</p>
+          <div id="track-counts" class="track-counts"><span>Loading studies…</span></div>
+          <div class="track-rule" aria-hidden="true"><span></span><span></span><span></span></div>
+          <p class="track-caption">From clean columns to models and time series.</p>
+        </aside>
+      </section>
+
+      <section class="casebook" id="casebook" aria-labelledby="casebook-title">
+        <div class="section-heading">
+          <div><p class="section-kicker">01 / THE CASEBOOK</p><h2 id="casebook-title">Browse the studies</h2></div>
+          <p class="data-count" id="data-count"></p>
+        </div>
+        <div class="controls">
+          <label class="search-control" for="search"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="Search a question, method, or tool" autocomplete="off" /><kbd>/</kbd></label>
+          <label class="filter-control" for="level-filter">Track<select id="level-filter"><option value="">All tracks</option></select></label>
+          <label class="filter-control" for="tool-filter">Tool<select id="tool-filter"><option value="">All tools</option></select></label>
+          <label class="saved-control"><input type="checkbox" id="saved-only" />Saved only</label>
+          <button class="shortlist-copy" id="copy-shortlist" type="button" disabled>Copy saved links <span id="saved-count">0</span></button>
+        </div>
+        <div class="results-bar"><p id="result-count" role="status" aria-live="polite">Loading…</p><p class="source-warning">Small samples are marked. Row count is not evidence quality.</p></div>
+        <div class="case-list" id="cases" role="list"></div>
+        <div class="empty-state" id="empty-state" hidden><span aria-hidden="true">∅</span><h3>No studies found</h3><p>Change a filter or clear the search to see all nine projects.</p><button id="clear-filters" type="button">Clear filters</button></div>
+        <p class="method-note">The site reads notebook titles, objectives, tool lists and bundled CSV metadata. It does not execute notebooks or copy raw data into the public output. Statistical interpretation, preprocessing and reproducibility should be checked in the linked notebooks.</p>
+      </section>
+
+      <section class="shortlist" aria-labelledby="shortlist-title">
+        <div class="shortlist-copy-block"><p class="section-kicker">02 / YOUR READING LIST</p><h2 id="shortlist-title">Save the cases you want to revisit.</h2><p>Saved project links stay in this browser. They are not uploaded or shared.</p></div>
+        <ul id="saved-list" class="saved-list"><li class="saved-empty">No saved case studies yet.</li></ul>
+        <p id="status" class="status-line" role="status" aria-live="polite"></p>
+      </section>
+
+      <footer class="page-footer"><p><span class="footer-mark" aria-hidden="true">D:</span> Data Fieldnotes</p><a href="https://github.com/YashRaJShaRMaCODE/Software-Internship-Projects-Python" target="_blank" rel="noopener noreferrer">Open source repository ↗</a><span>Notebook-backed · static · no tracking</span></footer>
+    </main>
+  </body>
+</html>

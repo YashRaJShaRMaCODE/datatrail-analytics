@@ -1,0 +1,176 @@
+{
+  "projects": [
+    {
+      "slug": "Task3_COVID_Data_Report",
+      "level": "Foundational",
+      "title": "COVID-19 Data Analysis Report",
+      "objective": "The objective of this project is to analyze COVID-19 data at a global level to understand daily trends in confirmed cases, deaths, and recoveries over time.",
+      "tools": [
+        "Python",
+        "Pandas",
+        "Matplotlib",
+        "Seaborn"
+      ],
+      "dataset": {
+        "name": "covid_19_clean_complete.csv",
+        "rows": 49068,
+        "columns": 10,
+        "raggedRows": 0
+      },
+      "notebook": "https://github.com/YashRaJShaRMaCODE/Software-Internship-Projects-Python/blob/main/Foundational/Task3_COVID_Data_Report/Task3_COVID_Data_Report.ipynb"
+    },
+    {
+      "slug": "Task1_Sales_Data_Analysis",
+      "level": "Foundational",
+      "title": "Sales Data Analysis",
+      "objective": "The objective of this project is to analyze sales data using Python and Pandas to extract meaningful business insights such as total sales, average sales, top-performing product categories, and sales distribution across products.",
+      "tools": [
+        "Python",
+        "Pandas",
+        "Matplotlib",
+        "Seaborn"
+      ],
+      "dataset": {
+        "name": "sales_data_sample.csv",
+        "rows": 2823,
+        "columns": 25,
+        "raggedRows": 0
+      },
+      "notebook": "https://github.com/YashRaJShaRMaCODE/Software-Internship-Projects-Python/blob/main/Foundational/Task1_Sales_Data_Analysis/Task1_Sales_Data_Analysis.ipynb"
+    },
+    {
+      "slug": "Task2_Student_Performance",
+      "level": "Foundational",
+      "title": "Student Performance Analysis",
+      "objective": "Analyze students' academic performance to calculate subject-wise averages, identify top-performing students, validate data quality, and visualize results.",
+      "tools": [
+        "Python",
+        "Pandas",
+        "Matplotlib",
+        "Seaborn"
+      ],
+      "dataset": {
+        "name": "StudentsPerformance.csv",
+        "rows": 1000,
+        "columns": 8,
+        "raggedRows": 0
+      },
+      "notebook": "https://github.com/YashRaJShaRMaCODE/Software-Internship-Projects-Python/blob/main/Foundational/Task2_Student_Performance/Task2_Student_Performance.ipynb"
+    },
+    {
+      "slug": "Task2_Bank_Customer_Churn",
+      "level": "Intermediate",
+      "title": "Bank Customer Churn Analysis",
+      "objective": "Analyze bank customer data to identify factors influencing customer churn using exploratory data analysis and visualization.",
+      "tools": [
+        "Python",
+        "Pandas",
+        "Matplotlib",
+        "Seaborn"
+      ],
+      "dataset": {
+        "name": "churn.csv",
+        "rows": 10000,
+        "columns": 14,
+        "raggedRows": 0
+      },
+      "notebook": "https://github.com/YashRaJShaRMaCODE/Software-Internship-Projects-Python/blob/main/Intermediate/Task2_Bank_Customer_Churn/Task2_Bank_Customer_Churn.ipynb"
+    },
+    {
+      "slug": "Task1_Ecommerce_Analysis",
+      "level": "Intermediate",
+      "title": "E-Commerce Dataset Analysis",
+      "objective": "Analyze an e-commerce dataset to understand customer orders, revenue trends, top-performing products, and high-revenue countries using exploratory data analysis.",
+      "tools": [
+        "Python",
+        "Pandas",
+        "Matplotlib",
+        "Seaborn"
+      ],
+      "dataset": {
+        "name": "OnlineRetail.csv",
+        "rows": 541909,
+        "columns": 8,
+        "raggedRows": 0
+      },
+      "notebook": "https://github.com/YashRaJShaRMaCODE/Software-Internship-Projects-Python/blob/main/Intermediate/Task1_Ecommerce_Analysis/Task1_Ecommerce_Analysis.ipynb"
+    },
+    {
+      "slug": "Task3_Interactive_Sales_Dashboard",
+      "level": "Intermediate",
+      "title": "Interactive Sales Dashboard",
+      "objective": "Create an interactive dashboard to analyze sales performance across regions, time periods, and products using interactive visualizations.",
+      "tools": [
+        "Python",
+        "Pandas",
+        "Plotly"
+      ],
+      "dataset": {
+        "name": "No bundled CSV matched",
+        "rows": null,
+        "columns": null,
+        "raggedRows": 0
+      },
+      "notebook": "https://github.com/YashRaJShaRMaCODE/Software-Internship-Projects-Python/blob/main/Intermediate/Task3_Interactive_Sales_Dashboard/Task3_Interactive_Sales_Dashboard.ipynb"
+    },
+    {
+      "slug": "Task2_Customer_Segmentation",
+      "level": "Advanced",
+      "title": "Customer Segmentation Using Clustering",
+      "objective": "Segment customers based on age, income, and spending behavior using K-Means clustering to support data-driven marketing strategies.",
+      "tools": [
+        "Python",
+        "Pandas",
+        "Scikit-learn",
+        "Matplotlib"
+      ],
+      "dataset": {
+        "name": "customer_data.csv",
+        "rows": 15,
+        "columns": 4,
+        "raggedRows": 0
+      },
+      "notebook": "https://github.com/YashRaJShaRMaCODE/Software-Internship-Projects-Python/blob/main/Advanced/Task2_Customer_Segmentation/Task2_Customer_Segmentation.ipynb"
+    },
+    {
+      "slug": "Task1_Retail_Sales_Forecasting",
+      "level": "Advanced",
+      "title": "Retail Sales Forecasting",
+      "objective": "Analyze historical retail sales data and forecast future sales trends using a moving average time-series technique.",
+      "tools": [
+        "Python",
+        "Pandas",
+        "Matplotlib"
+      ],
+      "dataset": {
+        "name": "retail_sales_data.csv",
+        "rows": 24,
+        "columns": 2,
+        "raggedRows": 0
+      },
+      "notebook": "https://github.com/YashRaJShaRMaCODE/Software-Internship-Projects-Python/blob/main/Advanced/Task1_Retail_Sales_Forecasting/Task1_Retail_Sales_Forecasting.ipynb"
+    },
+    {
+      "slug": "Task3_Sentiment_Analysis",
+      "level": "Advanced",
+      "title": "Social Media Sentiment Analysis",
+      "objective": "Analyze customer reviews to classify sentiment as positive, negative, or neutral using natural language processing techniques.",
+      "tools": [
+        "Matplotlib",
+        "Pandas"
+      ],
+      "dataset": {
+        "name": "reviews_data.csv",
+        "rows": 10,
+        "columns": 1,
+        "raggedRows": 0
+      },
+      "notebook": "https://github.com/YashRaJShaRMaCODE/Software-Internship-Projects-Python/blob/main/Advanced/Task3_Sentiment_Analysis/Task3_Sentiment_Analysis.ipynb"
+    }
+  ],
+  "levels": [
+    "Foundational",
+    "Intermediate",
+    "Advanced"
+  ]
+}
