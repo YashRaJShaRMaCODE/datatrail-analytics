@@ -40,6 +40,8 @@ These projects demonstrate practical data handling, exploratory data analysis, d
 
 ## Data Fieldnotes casebook
 
+**Live casebook:** https://data-fieldnotes.vercel.app/
+
 The `site/` folder contains a static, recruiter-facing index of the nine notebooks. It shows each notebook's question, declared tools, and bundled input size, with links to the original notebook.
 
 The casebook does not execute notebook code or repeat notebook conclusions. Small datasets are flagged for exploration only. The sentiment CSV was normalized to its one-column `Review` schema without changing review text or row count; saved notebook outputs have not been rerun. Raw CSVs and notebooks stay outside the public `site/` output; only casebook metadata is generated there.
