@@ -22,4 +22,6 @@ jobs:
       - run: python scripts/build_casebook.py
       - run: git diff --exit-code -- site/data/casebook.json
       - run: node --check site/app.js
+      - run: node --check site/casebook-logic.js
+      - run: node --test tests/test_casebook_logic.mjs
       - run: python -m json.tool site/data/casebook.json > /dev/null

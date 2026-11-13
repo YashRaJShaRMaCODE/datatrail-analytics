@@ -15,6 +15,7 @@
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; connect-src 'self'; img-src 'self' data:; base-uri 'none'; object-src 'none'; form-action 'none'" />
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="styles.css" />
+    <script src="casebook-logic.js" defer></script>
     <script src="app.js" defer></script>
     <title>Data Fieldnotes — Analytics casebook</title>
   </head>
@@ -55,6 +56,8 @@
           <label class="search-control" for="search"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="Search a question, method, or tool" autocomplete="off" /><kbd>/</kbd></label>
           <label class="filter-control" for="level-filter">Track<select id="level-filter"><option value="">All tracks</option></select></label>
           <label class="filter-control" for="tool-filter">Tool<select id="tool-filter"><option value="">All tools</option></select></label>
+          <label class="filter-control" for="dataset-filter">Data note<select id="dataset-filter"><option value="">Any dataset</option><option value="small">Small sample (&lt; 30 rows)</option><option value="unmatched">No matched CSV</option><option value="review">Needs data review</option></select></label>
+          <label class="filter-control" for="sort-filter">Sort<select id="sort-filter"><option value="">Track order</option><option value="title">Title A–Z</option><option value="largest">Largest input first</option><option value="smallest">Smallest input first</option></select></label>
           <label class="saved-control"><input type="checkbox" id="saved-only" />Saved only</label>
           <button class="shortlist-copy" id="copy-shortlist" type="button" disabled>Copy saved links <span id="saved-count">0</span></button>
         </div>
@@ -67,6 +70,7 @@
       <section class="shortlist" aria-labelledby="shortlist-title">
         <div class="shortlist-copy-block"><p class="section-kicker">02 / YOUR READING LIST</p><h2 id="shortlist-title">Save the cases you want to revisit.</h2><p>Saved project links stay in this browser. They are not uploaded or shared.</p></div>
         <ul id="saved-list" class="saved-list"><li class="saved-empty">No saved case studies yet.</li></ul>
+        <div class="reading-list-actions"><button id="backup-list" type="button" disabled>Download list JSON</button><button id="restore-list" type="button" disabled>Restore list</button><input id="list-file" type="file" accept="application/json,.json" hidden /></div>
         <p id="status" class="status-line" role="status" aria-live="polite"></p>
       </section>
 

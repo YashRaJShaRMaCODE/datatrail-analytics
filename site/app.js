@@ -2,18 +2,23 @@ const casesNode = document.querySelector("#cases");
 const search = document.querySelector("#search");
 const levelFilter = document.querySelector("#level-filter");
 const toolFilter = document.querySelector("#tool-filter");
+const datasetFilter = document.querySelector("#dataset-filter");
+const sortFilter = document.querySelector("#sort-filter");
 const savedOnly = document.querySelector("#saved-only");
 const resultCount = document.querySelector("#result-count");
 const empty = document.querySelector("#empty-state");
 const savedList = document.querySelector("#saved-list");
 const savedCount = document.querySelector("#saved-count");
 const status = document.querySelector("#status");
+const listFile = document.querySelector("#list-file");
 const storageKey = "data-fieldnotes:saved-v1";
 const params = new URLSearchParams(location.search);
 const state = {
   query: params.get("q") || "",
   level: params.get("level") || "",
   tool: params.get("tool") || "",
+  dataset: params.get("dataset") || "",
+  sort: params.get("sort") || "",
   savedOnly: params.get("saved") === "1",
   openCase: params.get("case") || "",
   casebook: null,
@@ -41,10 +46,12 @@ function safeExternalUrl(value) {
 
 function syncUrl() {
   const url = new URL(location.href);
-  for (const key of ["q", "level", "tool", "saved", "case"]) url.searchParams.delete(key);
+  for (const key of ["q", "level", "tool", "dataset", "sort", "saved", "case"]) url.searchParams.delete(key);
   if (state.query.trim()) url.searchParams.set("q", state.query.trim());
   if (state.level) url.searchParams.set("level", state.level);
   if (state.tool) url.searchParams.set("tool", state.tool);
+  if (state.dataset) url.searchParams.set("dataset", state.dataset);
+  if (state.sort) url.searchParams.set("sort", state.sort);
   if (state.savedOnly) url.searchParams.set("saved", "1");
   if (state.openCase) url.searchParams.set("case", state.openCase);
   history.replaceState(null, "", url);
@@ -73,6 +80,7 @@ function renderSaved() {
   const saved = allProjects().filter(project => state.saved.has(project.slug));
   savedCount.textContent = String(saved.length);
   document.querySelector("#copy-shortlist").disabled = saved.length === 0;
+  document.querySelector("#backup-list").disabled = saved.length === 0;
   savedList.replaceChildren();
   if (!saved.length) {
     savedList.append(element("li", "saved-empty", "No saved case studies yet."));
@@ -107,6 +115,7 @@ function projectMatches(project) {
   return (!state.query.trim() || text.includes(state.query.trim().toLocaleLowerCase()))
     && (!state.level || project.level === state.level)
     && (!state.tool || project.tools.includes(state.tool))
+    && window.CasebookLogic.matchesDatasetNote(project, state.dataset)
     && (!state.savedOnly || state.saved.has(project.slug));
 }
 
@@ -195,7 +204,7 @@ function renderCase(project) {
 
 function render() {
   if (!state.casebook) return;
-  const projects = allProjects().filter(projectMatches);
+  const projects = window.CasebookLogic.sortProjects(allProjects().filter(projectMatches), state.sort);
   if (state.openCase && !projects.some(project => project.slug === state.openCase)) state.openCase = "";
   syncUrl();
   const fragment = document.createDocumentFragment();
@@ -222,23 +231,68 @@ async function copyShortlist() {
   }
 }
 
+function backupReadingList() {
+  const slugs = allProjects().filter(project => state.saved.has(project.slug)).map(project => project.slug);
+  if (!slugs.length) return;
+  const backup = { format: "data-fieldnotes-reading-list", version: 1, slugs };
+  const url = URL.createObjectURL(new Blob([JSON.stringify(backup, null, 2)], { type: "application/json" }));
+  const link = element("a");
+  link.href = url;
+  link.download = "data-fieldnotes-reading-list.json";
+  link.click();
+  window.setTimeout(() => URL.revokeObjectURL(url), 0);
+  status.textContent = `Downloaded ${slugs.length} saved case ${slugs.length === 1 ? "link" : "links"}.`;
+}
+
+async function restoreReadingList(file) {
+  if (!file) return;
+  listFile.value = "";
+  if (file.size > 200_000) {
+    status.textContent = "That reading-list backup is too large.";
+    return;
+  }
+  try {
+    const backup = JSON.parse(await file.text());
+    const merged = window.CasebookLogic.mergeSavedSlugs(state.saved, backup, allProjects().map(project => project.slug));
+    if (!merged) throw new Error("unsupported backup");
+    const previousValidCount = allProjects().filter(project => state.saved.has(project.slug)).length;
+    const added = merged.length - previousValidCount;
+    state.saved = new Set(merged);
+    saveStorage();
+    renderSaved();
+    render();
+    status.textContent = `Restored ${added} new ${added === 1 ? "case" : "cases"}; existing saved cases kept.`;
+  } catch {
+    status.textContent = "Could not restore that file. Choose a Data Fieldnotes reading-list backup.";
+  }
+}
+
 search.addEventListener("input", () => { state.query = search.value; render(); });
 levelFilter.addEventListener("change", () => { state.level = levelFilter.value; render(); });
 toolFilter.addEventListener("change", () => { state.tool = toolFilter.value; render(); });
+datasetFilter.addEventListener("change", () => { state.dataset = datasetFilter.value; render(); });
+sortFilter.addEventListener("change", () => { state.sort = sortFilter.value; render(); });
 savedOnly.addEventListener("change", () => { state.savedOnly = savedOnly.checked; render(); });
 document.querySelector("#clear-filters").addEventListener("click", () => {
   state.query = "";
   state.level = "";
   state.tool = "";
+  state.dataset = "";
+  state.sort = "";
   state.savedOnly = false;
   search.value = "";
   levelFilter.value = "";
   toolFilter.value = "";
+  datasetFilter.value = "";
+  sortFilter.value = "";
   savedOnly.checked = false;
   render();
   search.focus();
 });
 document.querySelector("#copy-shortlist").addEventListener("click", copyShortlist);
+document.querySelector("#backup-list").addEventListener("click", backupReadingList);
+document.querySelector("#restore-list").addEventListener("click", () => listFile.click());
+listFile.addEventListener("change", () => void restoreReadingList(listFile.files?.[0]));
 document.querySelector("#print-casebook").addEventListener("click", () => window.print());
 document.addEventListener("keydown", event => {
   if (event.key === "/" && !["INPUT", "TEXTAREA", "SELECT"].includes(document.activeElement.tagName)) {
@@ -265,12 +319,17 @@ fetch("data/casebook.json")
   })
   .then(casebook => {
     state.casebook = casebook;
+    document.querySelector("#restore-list").disabled = false;
     setOptions(levelFilter, casebook.levels, "All tracks");
     setOptions(toolFilter, casebook.projects.flatMap(project => project.tools), "All tools");
     levelFilter.value = casebook.levels.includes(state.level) ? state.level : "";
     toolFilter.value = [...toolFilter.options].some(option => option.value === state.tool) ? state.tool : "";
+    datasetFilter.value = ["", "small", "unmatched", "review"].includes(state.dataset) ? state.dataset : "";
+    sortFilter.value = ["", "title", "largest", "smallest"].includes(state.sort) ? state.sort : "";
     if (!levelFilter.value) state.level = "";
     if (!toolFilter.value) state.tool = "";
+    if (!datasetFilter.value) state.dataset = "";
+    if (!sortFilter.value) state.sort = "";
 
     const trackCounts = casebook.levels.map(level => [level, casebook.projects.filter(project => project.level === level).length]);
     document.querySelector("#track-counts").replaceChildren(...trackCounts.map(([level, number]) => {
